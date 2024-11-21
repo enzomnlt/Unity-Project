@@ -9,7 +9,7 @@ public class Struct : MonoBehaviour
     private Queue<Capsule> waitingQueue;
     private Queue<Capsule> visitingQueue;
     private Queue<float> visitingTimes;
-    private int maxVisitors = 1;
+    private int maxVisitors = 5;
     private Capsule lastWaiter;
     private Vector3 lastWaiterPosition;
 
@@ -30,12 +30,14 @@ public class Struct : MonoBehaviour
 
     void Start()
     {
-        waitingQueue = new Queue<Capsule>();
-        visitingQueue = new Queue<Capsule>();
-        visitingTimes = new Queue<float>();
+        waitingQueue = new Queue<Capsule>(); // Queue of capsules waiting to enter the structure
+        visitingQueue = new Queue<Capsule>(); // Queue of capsules currently inside the structure
+        visitingTimes = new Queue<float>(); // Queue of times when capsules entered the structure
+    
         entrance = transform.Find("Entrance");
         exit = transform.Find("Exit");
-        lastWaiterPosition = entrance.position;
+
+        lastWaiterPosition = entrance.position; // 
     }
 
     void Update()
