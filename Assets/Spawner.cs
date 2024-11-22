@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Spawner : MonoBehaviour
 {
@@ -8,30 +9,32 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < 10; i++) // Spawn 10 capsules at the start
-        {
-            Instantiate(capsule, new Vector3(46, 6, 37), Quaternion.identity);
-        }
+        SpawnCapsules(10);
     }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)) // Press 1 to spawn 1 capsule
         {
-            Instantiate(capsule, new Vector3(46, 6, 37), Quaternion.identity);
+            SpawnCapsules(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // Press 2 to spawn 5 capsule
         {
-            for(int i = 0; i < 5; i++) // Press 2 to spawn 5 capsules
-            {
-                Instantiate(capsule, new Vector3(46, 6, 37), Quaternion.identity);
-            }
+            SpawnCapsules(5);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // Press 3 to spawn 10 capsule
         {
-            for(int i = 0; i < 10; i++) // Press 3 to spawn 10 capsules
-            {
-                Instantiate(capsule, new Vector3(46, 6, 37), Quaternion.identity);
-            }
+            SpawnCapsules(10);
+        }
+    }
+
+    public void SpawnCapsules(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject newCapsule = Instantiate(capsule, new Vector3(56, 9, 50), Quaternion.identity);
+            NavMeshAgent agent = newCapsule.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
         }
     }
 }

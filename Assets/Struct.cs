@@ -9,7 +9,7 @@ public class Struct : MonoBehaviour
     private Queue<Capsule> waitingQueue;
     private Queue<Capsule> visitingQueue;
     private Queue<float> visitingTimes;
-    private int maxVisitors = 5;
+    private int maxVisitors = 1;
     private Capsule lastWaiter;
     private Vector3 lastWaiterPosition;
 
