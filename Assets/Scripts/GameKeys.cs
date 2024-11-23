@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Spawner : MonoBehaviour
+public class GameKeys : MonoBehaviour
 {
     [SerializeField] private GameObject visitor;
     [SerializeField] private GameObject wanderer;
@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
         {
             SpawnEntities(visitor, 10);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // Press 2 to spawn 25 visitors
+        if (Input.GetKeyDown(KeyCode.Alpha2)) // Press 2 to spawn 25 visitors
         {
             SpawnEntities(visitor, 25);
         }
@@ -28,9 +28,13 @@ public class Spawner : MonoBehaviour
         {
             SpawnEntities(wanderer, 10);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) // Press 4 to spawn 25 wanderers
+        if (Input.GetKeyDown(KeyCode.Alpha4)) // Press 4 to spawn 25 wanderers
         {
             SpawnEntities(wanderer, 25);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) // Press ESC to quit the game
+        {
+            Application.Quit();
         }
     }
 
