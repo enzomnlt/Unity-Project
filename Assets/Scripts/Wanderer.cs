@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Wanderer : MonoBehaviour
 {
     public NavMeshAgent agent;
+    // Fix area so that the agent doesn't wander off the camera
     public int minX = 35;
     public int maxX = 125;
     public int minZ = 10;
@@ -25,7 +26,7 @@ public class Wanderer : MonoBehaviour
         }
     }
 
-    void ChooseNewDestination()
+    private void ChooseNewDestination()
     {
         Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), transform.position.y, Random.Range(minZ, maxZ));
         agent.SetDestination(randomPosition);

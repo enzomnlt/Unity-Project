@@ -31,39 +31,58 @@ public class Visitor : MonoBehaviour
 
     void Update()
     {
-        if(agent.hasPath && !agent.pathPending && agent.remainingDistance < 1.75f)
+
+        if (agent.hasPath && !agent.pathPending)
         {
-            if(!waiting) {
+            HandleAgentMovement();
+        }
+
+        if(visiting)
+        {
+            HandleVisiting();
+        }
+
+        if(destIndex == -1 && !visiting)
+        {
+            SetNewDestination();
+        }
+    }
+
+    private void HandleAgentMovement()
+    {
+        if (agent.remainingDistance < 1.75f)
+        {
+            if (!waiting)
+            {
                 waiting = true;
                 structures[destIndex].PutInQueue(this);
             }
             agent.isStopped = true;
         }
-
-        if(agent.hasPath && !agent.pathPending && agent.remainingDistance > 1.75f)
+        else
         {
             agent.isStopped = false;
-            if (!waiting)
+            if (!waiting)  // keep destination to last waiter in queue if not already waiting
             {
                 agent.SetDestination(structures[destIndex].LastWaiterPosition);
             }
         }
+    }
 
-        if(visiting)
-        {
-            capsuleCollider.enabled = false;
-            capsuleRenderer.enabled = false;
-            agent.enabled = false;
-            waiting = false;
-            destIndex = -1;
-        }
+    private void HandleVisiting()
+    {
+        capsuleCollider.enabled = false;
+        capsuleRenderer.enabled = false;
+        agent.enabled = false;
+        waiting = false;
+        destIndex = -1;
+    }
 
-        if(destIndex == -1 && !visiting)
-        {
-            capsuleCollider.enabled = true;
-            capsuleRenderer.enabled = true;
-            destIndex = Random.Range(0, structures.Length);
-            agent.SetDestination(structures[destIndex].LastWaiterPosition);
-        }
+    private void SetNewDestination()
+    {
+        capsuleCollider.enabled = true;
+        capsuleRenderer.enabled = true;
+        destIndex = Random.Range(0, structures.Length);
+        agent.SetDestination(structures[destIndex].LastWaiterPosition);
     }
 }

@@ -10,46 +10,43 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        SpawnVisitors(9);
-        SpawnWanderers(9);
+        SpawnEntities(visitor, 9);
+        SpawnEntities(wanderer, 9);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) // Press 1 to spawn 10 visitors
         {
-            SpawnVisitors(10);
+            SpawnEntities(visitor, 10);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) // Press 2 to spawn 25 visitors
         {
-            SpawnVisitors(25);
+            SpawnEntities(visitor, 25);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3)) // Press 3 to spawn 10 wanderers
         {
-            SpawnWanderers(10);
+            SpawnEntities(wanderer, 10);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4)) // Press 4 to spawn 25 wanderers
         {
-            SpawnWanderers(25);
+            SpawnEntities(wanderer, 25);
         }
     }
 
-    public void SpawnVisitors(int count)
+    private void SpawnEntities(GameObject entity, int count)
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject newVisitor = Instantiate(visitor, new Vector3(50, 9, 45), Quaternion.identity);
+            Vector3 spawnPosition = new Vector3(44, 9, 44);
+            GameObject newEntity = Instantiate(entity, spawnPosition, Quaternion.identity);
+
             // Precaution if the reference visitor is disabled (visiting a structure) :
-            NavMeshAgent agent = newVisitor.GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-        }
-    }
-    public void SpawnWanderers(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            Vector3 randomPosition = new Vector3(50, 9, 45);
-            GameObject newWanderer = Instantiate(wanderer, randomPosition, Quaternion.identity);
+            if (entity == visitor)
+            {
+                NavMeshAgent agent = newEntity.GetComponent<NavMeshAgent>();
+                agent.enabled = true;
+            }
         }
     }
 }
