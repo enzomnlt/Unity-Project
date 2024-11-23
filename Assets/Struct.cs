@@ -6,11 +6,11 @@ public class Struct : MonoBehaviour
 {
     [SerializeField] private Transform entrance;
     [SerializeField] private Transform exit;
-    private Queue<Capsule> waitingQueue;
-    private Queue<Capsule> visitingQueue;
+    private Queue<Visitor> waitingQueue;
+    private Queue<Visitor> visitingQueue;
     private Queue<float> visitingTimes;
     private int maxVisitors = 1;
-    private Capsule lastWaiter;
+    private Visitor lastWaiter;
     private Vector3 lastWaiterPosition;
 
     public Transform Entrance
@@ -30,18 +30,23 @@ public class Struct : MonoBehaviour
 
     void Start()
     {
-        waitingQueue = new Queue<Capsule>(); // Queue of capsules waiting to enter the structure
-        visitingQueue = new Queue<Capsule>(); // Queue of capsules currently inside the structure
+        waitingQueue = new Queue<Visitor>(); // Queue of capsules waiting to enter the structure
+        visitingQueue = new Queue<Visitor>(); // Queue of capsules currently inside the structure
         visitingTimes = new Queue<float>(); // Queue of times when capsules entered the structure
     
         entrance = transform.Find("Entrance");
         exit = transform.Find("Exit");
 
-        lastWaiterPosition = entrance.position; // 
+        lastWaiterPosition = entrance.position;
     }
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            maxVisitors++;
+        }
+
         if(visitingQueue.Count < maxVisitors && waitingQueue.Count > 0)
         {
             var newVisitor = waitingQueue.Dequeue();
@@ -70,7 +75,7 @@ public class Struct : MonoBehaviour
         UpdateQueueDestinations();
     }
 
-    public void PutInQueue(Capsule capsule)
+    public void PutInQueue(Visitor capsule)
     {
         waitingQueue.Enqueue(capsule);
         lastWaiter = capsule;

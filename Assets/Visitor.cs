@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Capsule : MonoBehaviour
+public class Visitor : MonoBehaviour
 {
     public NavMeshAgent agent;
 
@@ -15,7 +15,6 @@ public class Capsule : MonoBehaviour
     private int destIndex = -1;
     private bool visiting = false;
     private bool waiting = false;
-    private string number;
 
     public bool Visiting
     {
